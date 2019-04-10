@@ -7,12 +7,12 @@
   };
 
   console.log = function(message) {
-      post({log: message});
+      post({ log: message });
   };
 
   var showReCaptcha = function() {
-      console.log("showReCaptcha");
-      post({action: "showReCaptcha"});
+      console.log('showReCaptcha');
+      post({ action: 'showReCaptcha' });
   };
   
   var observeDOM = function(element, completion) {
@@ -21,42 +21,49 @@
         completion();
       });
     })
-    .observe(element, {attributes: true, attributeFilter: ['style']})
+    .observe(element, {
+      attributes: true, 
+      attributeFilter: ['style'],
+    });
   };
 
   var execute = function() {
-    console.log("executing");
+    console.log('executing');
 
     // Removes ReCaptcha dismissal when clicking outside div area
     try {
-        document.getElementsByTagName("div")[4].outerHTML = ""
+        document.getElementsByTagName('div')[4].outerHTML = '';
     }
-    catch(e) {
-    }
+    catch(e) {}
 
     // Listens to changes on the div element that presents the ReCaptcha challenge
-    observeDOM(document.getElementsByTagName("div")[3], showReCaptcha);
+    observeDOM(document.getElementsByTagName('div')[3], showReCaptcha);
 
     grecaptcha.execute();
   };
 
   var onSubmit = function(token) {
     console.log(token);
-    post({token: token});
+    post({ token });
   };
 
   var onloadCallback = function() {
-    console.log("did load");
+    console.log('did load');
     grecaptcha.render('submit', {
-      'sitekey' : '${apiKey}',
-      'callback' : onSubmit,
-      'size': 'invisible'
+      sitekey : '${apiKey}',
+      callback : onSubmit,
+      size: 'invisible'
     });
   };
 
   var reset = function() {
-      console.log("resetting");
-      grecaptcha.reset();
+    console.log('resetting');
+    grecaptcha.reset();
+  };
+
+  var verify = function() {
+    const challengeDiv = document.getElementsByTagName('div')[3];
+    post({ verify: challengeDiv !== undefined });
   };
   </script>
 </head>

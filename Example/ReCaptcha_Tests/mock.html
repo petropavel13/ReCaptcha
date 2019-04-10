@@ -2,8 +2,8 @@
 <head>
   <meta name="viewport" content="width=device-width" />
   <script type="text/javascript">
-  var key = "${apiKey}";
-  var endpoint = "${endpoint}";
+  var key = '${apiKey}';
+  var endpoint = '${endpoint}';
   var shouldFail = ${shouldFail};
 
   var post = function(value) {
@@ -12,7 +12,7 @@
 
   var execute = function() {
       if (shouldFail) {
-          post("error");
+          post('error');
       }
       else {
           post(${message});
@@ -21,7 +21,11 @@
 
   var reset = function() {
       shouldFail = false;
-      post({action: "didLoad"});
+      post({ action: 'didLoad' });
+  };
+
+  var verify = function() {
+      post({ verify: shouldFail });
   };
   </script>
 </head>

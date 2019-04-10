@@ -30,6 +30,9 @@ internal class ReCaptchaDecoder: NSObject {
 
         /// Logs a string onto the console
         case log(String)
+
+        /// Verifies the configuration
+        case verify(Bool)
     }
 
     /// The closure that receives messages
@@ -89,6 +92,12 @@ fileprivate extension ReCaptchaDecoder.Result {
         if let token = response["token"] as? String {
             return .token(token)
         }
+        else if let success = response["verify"] as? Bool {
+            return .verify(success)
+        }
+        else if let message = response["log"] as? String {
+            return .log(message)
+        }
 
         if let action = response["action"] as? String {
             switch action {
@@ -101,10 +110,6 @@ fileprivate extension ReCaptchaDecoder.Result {
             default:
                 break
             }
-        }
-
-        if let message = response["log"] as? String {
-            return .log(message)
         }
 
         return .error(.wrongMessageFormat)

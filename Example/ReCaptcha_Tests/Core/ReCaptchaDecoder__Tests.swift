@@ -164,4 +164,25 @@ class ReCaptchaDecoder__Tests: XCTestCase {
         // Check
         XCTAssertEqual(result, .didLoad)
     }
+
+
+    func test__Decode__Verify() {
+        let exp = expectation(description: "send verify")
+        let expectedResult = true
+        var result: Result?
+
+        assertResult = { res in
+            result = res
+            exp.fulfill()
+        }
+
+        // Send
+        let message = MockMessage(message: ["verify": expectedResult])
+        decoder.send(message: message)
+
+        waitForExpectations(timeout: 1)
+
+        // Check
+        XCTAssertEqual(result, .verify(expectedResult))
+    }
 }
