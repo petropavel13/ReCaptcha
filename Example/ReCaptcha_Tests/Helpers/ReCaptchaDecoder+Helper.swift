@@ -48,9 +48,6 @@ extension ReCaptchaDecoder.Result: Equatable {
         case (.error(let lhe), .error(let rhe)):
             return lhe == rhe
 
-        case (.verify(let lhv), .verify(let rhv)):
-            return lhv == rhv
-
         default:
             return false
         }

@@ -58,11 +58,9 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func didPressButton(button: UIButton) {
-        label.text = ""
-
         disposeBag = DisposeBag()
 
-        let validate = recaptcha.rx.validate(on: view, resetOnError: false)
+        let validate = recaptcha.rx.validate(on: view)
             .debug("validate")
             .share()
 
